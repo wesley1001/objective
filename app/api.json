@@ -3,7 +3,10 @@
     "login": "pub/sign.json",
     "taste": "pub/try.json",
     "auth": "pub/authorize.json",
-    "resetPassword": "pub/repassword.json"
+    "resetPassword": "pub/repassword.json",
+    "sign": {
+      "weibo": "pub/weibo/sign.json"
+    }
   },
   "agenda": {
     "list": "agenda/recent.json",
@@ -11,7 +14,10 @@
     "update": "agenda/todo/update.json",
     "remove": "agenda/todo/delete.json",
     "schedule": "agenda/todo/redate.json",
-    "done": "agenda/todo/fulfill.json",
+    "punch": "agenda/todo/fulfill.json",
+    "done": {
+      "recent": "agenda/done/recent.json"
+    },
     "remind": "agenda/todo/remind.json"
   },
   "inbox": {
@@ -52,7 +58,10 @@
   "me": {
     "reward": "reward/agenda.json",
     "upgrade": "user/upgrade.json",
-    "open": "social/open.json"
+    "open": "social/open.json",
+    "token": {
+      "avatar": "user/avatar/upload/auth.json"
+    }
   },
   "feedback": {
     "list": "conta/feedback/mime.json",

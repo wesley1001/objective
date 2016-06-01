@@ -1,13 +1,12 @@
 /**
  * Created by Layman(http://github.com/anysome) on 16/2/19.
  */
-'use strict';
-
-import React, {StyleSheet, NavigatorIOS, TabBarIOS, Component, PushNotificationIOS, AppStateIOS, AlertIOS} from 'react-native';
+import React from 'react';
+import {StyleSheet, NavigatorIOS, TabBarIOS, PushNotificationIOS, AppStateIOS, AlertIOS} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {airloy, colors} from '../../app';
-
+import {airloy, colors, api} from '../../app';
+import util from '../../libs/Util';
 
 import Agenda from '../agenda/Agenda';
 import Check from '../check/Check';
@@ -16,9 +15,7 @@ import Me from '../me/Me';
 import Discover from '../discover/Discover';
 
 
-const iconSize = 28;
-
-export default class Frame extends Component {
+export default class Frame extends React.Component {
 
 	constructor() {
 		super();
@@ -26,10 +23,9 @@ export default class Frame extends Component {
 		this.state = {
 			currentPage: 'Me'
 		};
+    this.iconSize = 28;
 		this.icons = new Map();
-		let now = new Date();
-		now.setHours(0, 0,0,0);
-		this.today = now.getTime();
+    this.today = util.getTodayStart();
 		this._handleAppStateChange = this._handleAppStateChange.bind(this);
 	}
 
@@ -53,6 +49,7 @@ export default class Frame extends Component {
 		if ( currentAppState === 'active') {
 			if ( new Date().getTime() - this.today > 86400000 ) {
 				this.today = this.today + 86400000;
+				airloy.net.httpGet(api.check.list);
 				airloy.event.emit('target.change');
 				airloy.event.emit('agenda.change');
 				airloy.event.emit('me.change');
@@ -134,7 +131,7 @@ export default class Frame extends Component {
 					title="待办"
 					iconName="ios-star-outline"
 					selectedIconName="ios-star"
-					iconSize={iconSize}
+					iconSize={this.iconSize}
 					selected={this.state.currentPage === 'Agenda'}
 					onPress={() => this._selectTab('Agenda')}>
 					{this._renderNavigator(Agenda, "待办")}
@@ -143,12 +140,12 @@ export default class Frame extends Component {
 					title="检查单"
 					iconName="ios-checkmark-outline"
 					selectedIconName="android-checkmark-circle"
-					iconSize={iconSize}
+					iconSize={this.iconSize}
 					selected={this.state.currentPage === 'Check'}
 					onPress={() => this._selectTab('Check')}>
 					{this._renderNavigator(Check, "检查单")}
 				</Icon.TabBarItem>
-				<Icon.TabBarItem iconName="plus-round" title={null} iconSize={36}
+				<Icon.TabBarItem iconName="plus-round" title={null} iconSize={this.iconSize}
 								 selected={this.state.currentPage === 'Anything'}
 								 onPress={() => this._openAdd()}>
 					<Anything onClose={() => this.closeAdd()} />
@@ -157,7 +154,7 @@ export default class Frame extends Component {
 					title="我"
 					iconName="ios-person-outline"
 					selectedIconName="ios-contact-outline"
-					iconSize={iconSize}
+					iconSize={this.iconSize}
 					selected={this.state.currentPage === 'Me'}
 					onPress={() => this._selectTab('Me')}>
 					{this._renderNavigator(Me, "我", true)}
@@ -166,7 +163,7 @@ export default class Frame extends Component {
 					title="发现"
 					iconName="ios-navigate-outline"
 					selectedIconName="ios-navigate"
-					iconSize={iconSize}
+					iconSize={this.iconSize}
 					selected={this.state.currentPage === 'Discover'}
 					onPress={() => this._selectTab('Discover')}>
 					{this._renderNavigator(Discover, "发现")}

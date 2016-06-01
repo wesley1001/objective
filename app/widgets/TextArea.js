@@ -1,18 +1,11 @@
-'use strict';
-
-import React, {
-  PixelRatio,
-  View,
-  TextInput,
-  Text
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, PixelRatio, View, TextInput, Text} from 'react-native';
 
 import {colors} from '../app';
-
-//var RCTUIManager = require('NativeModules').UIManager;
+import util from '../libs/Util';
 
 var TextArea = React.createClass({
-  propTypes: React.TextInput.propTypes,
+  propTypes: TextInput.propTypes,
 
   value: '',
 
@@ -104,10 +97,10 @@ var TextArea = React.createClass({
   }
 })
 
-var styles = React.StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 10
+    marginBottom: util.isAndroid() ? 0 : 10
   },
   hidden: {
     position: 'absolute',
@@ -123,7 +116,7 @@ var styles = React.StyleSheet.create({
     padding: 10,
     flex: 1,
     fontSize: 18,
-    marginTop: 10,
+    marginTop: util.isAndroid() ? 0 : 10,
     color: colors.accent,
     borderWidth: 1,
     borderColor: colors.light3,
@@ -131,6 +124,7 @@ var styles = React.StyleSheet.create({
     backgroundColor: colors.light1
   },
   hiddenFlat: {
+    marginTop: util.isAndroid() ? 5 : 0,
     position: 'absolute',
     top: 10000,  // way off screen
     left: 10000, // way off screen
@@ -141,7 +135,7 @@ var styles = React.StyleSheet.create({
   },
   flat: {
     flex: 1,
-    marginTop: 5,
+    marginTop: util.isAndroid() ? 1 : 5,
     color: colors.accent,
     backgroundColor: colors.light1,
     fontSize: 14
